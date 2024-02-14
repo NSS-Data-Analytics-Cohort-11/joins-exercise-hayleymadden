@@ -3,7 +3,7 @@
 SELECT t1.film_title, t1.release_year, t2.worldwide_gross
 FROM specs as t1
 INNER JOIN revenue as t2
-ON t1.movie_id = t2.movie_id
+	ON t1.movie_id = t2.movie_id
 ORDER BY t2.worldwide_gross ASC
 LIMIT 1;
 
@@ -14,15 +14,19 @@ LIMIT 1;
 SELECT t2.release_year, avg(t1.imdb_rating) as avg_rating
 FROM rating as t1
 INNER JOIN specs as t2
-ON t1.movie_id = t2.movie_id
+	ON t1.movie_id = t2.movie_id
 GROUP BY release_year
-ORDER BY avg_rating;
+ORDER BY avg_rating DESC;
 
---Answer: 1983 has the highest average IMDB rating.
+--Answer: 1991 has the highest average IMDB rating.
 
 -- 3. What is the highest grossing G-rated movie? Which company distributed it?
 
-SELECT t1.film_title as title, t1.mpaa_rating as rating, t2.worldwide_gross, t3.company_name as distributor
+SELECT 
+	t1.film_title as title, 
+	t1.mpaa_rating as rating, 
+	t2.worldwide_gross, 
+	t3.company_name as distributor
 FROM specs as t1
 INNER JOIN revenue as t2
 	ON t1.movie_id = t2.movie_id
@@ -47,7 +51,9 @@ ORDER BY movies_released DESC;
 
 -- 5. Write a query that returns the five distributors with the highest average movie budget.
 
-SELECT t1.company_name as distributor, ROUND(AVG(t3.film_budget),2) as avg_budget
+SELECT 
+	t1.company_name as distributor, 
+	ROUND(AVG(t3.film_budget),2) as avg_budget
 FROM distributors as t1
 LEFT JOIN specs as t2
 	ON t1.distributor_id = t2.domestic_distributor_id
